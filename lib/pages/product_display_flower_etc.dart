@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:four_twenty_express/constants/functions.dart';
 import 'package:four_twenty_express/constants/variables.dart';
+import 'package:four_twenty_express/logic/checkout_bloc.dart';
 import 'package:four_twenty_express/objects/product.dart';
 import 'package:four_twenty_express/objects/supplier.dart';
 ///-----------------------------------------------------------------------------
@@ -288,6 +289,22 @@ class _DisplayCannabisInfusedProductState extends State<DisplayCannabisInfusedPr
           ElevatedButton(
               onPressed: () {
                 // TODO: ADD TO CART
+                bloc.addToCart({
+                  'product_id' : product.id,
+                  'name' : product.name,
+                  'type': product.type,
+                  'description' : product.description,
+                  'images' : product.images,
+                  'price' : product.price,
+                  'quantity' : quantity,
+                  'total' : quantity * product.price,
+                  'product_object' : product,
+                  'onPressed' : () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> DisplayCannabisInfusedProduct(
+                          product: product
+                      )));
+                  }
+                }, context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: buttonColor

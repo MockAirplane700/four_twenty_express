@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:four_twenty_express/constants/variables.dart';
 import 'package:four_twenty_express/logic/checkout_bloc.dart';
+import 'package:four_twenty_express/pages/product_display_flower_etc.dart';
 import 'package:four_twenty_express/widgets/custom_checkout_card.dart';
 ///-----------------------------------------------------------------------------
 ///   TYPICAL CHECKOUT -
@@ -49,12 +50,26 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     //  LIST VIEW OF SHOP
                     return ListView.builder(
                         itemBuilder: (context, index){
+                          // 'product_id' : product.id,
+                          // 'name' : product.name,
+                          // 'type': product.type,
+                          // 'description' : product.description,
+                          // 'images' : product.images,
+                          // 'price' : product.price,
+                          // 'quantity' : quantity,
+                          // 'total' : quantity * product.price,
+                          // 'product_object' : product
+
                           return CheckoutTile(
-                              title: items[index]['title'], thumbnail: items[index]['thumbnail'],
+                              title: items[index]['name'],
+                              thumbnail: items[index]['images'][0],
                               total: items[index]['total'],
-                              quantity: items[index]['quantity'], onPressed: items[index]['onPressed'],
-                              delete: items[index]['delete'],
-                              quantityWidget: items[index]['quantityWidget']
+                              quantity: items[index]['quantity'],
+                              onPressed: items[index]['onPressed'],
+                              delete: IconButton(onPressed: () {
+                                bloc.removeFromCart(items[index]);
+                              }, icon: const Icon(Icons.delete, color: Colors.red,)),
+                              quantityWidget: Container()
                           );
                         },
                       itemCount: items.length,
@@ -64,6 +79,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   }//end if-else
                 },
               stream: bloc.getStream,
+              initialData: bloc.allItems,
             ),
           ),
           //  SHOW CASE TOTALS AND FEES
