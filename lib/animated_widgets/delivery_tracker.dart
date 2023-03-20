@@ -1,5 +1,9 @@
 import 'package:const_date_time/const_date_time.dart';
 import 'package:flutter/material.dart';
+import 'package:four_twenty_express/objects/delivery_message.dart';
+import 'package:four_twenty_express/objects/delivery_process.dart';
+import 'package:four_twenty_express/objects/driver.dart';
+import 'package:four_twenty_express/objects/order_info.dart';
 import 'package:timelines/timelines.dart';
 
 ///-----------------------------------------------------------------------------
@@ -10,31 +14,31 @@ const kTileHeight = 50.0;
 
 
 class PackageDeliveryTrackingPage extends StatelessWidget {
-  final _OrderInfo info;
-  const PackageDeliveryTrackingPage({super.key,  this.info = const _OrderInfo(
+  final OrderInfo info;
+  const PackageDeliveryTrackingPage({super.key,  this.info = const OrderInfo(
     id: 1,
-    date: const ConstDateTime(2022,10,10 ),
-    driverInfo: const _DriverInfo(
+    date: ConstDateTime(2022,10,10 ),
+    driverInfo: DriverInfo(
       name: 'Philipe',
       thumbnailUrl:
       'https://i.pinimg.com/originals/08/45/81/084581e3155d339376bf1d0e17979dc6.jpg',
     ),
     deliveryProcesses: [
-      const _DeliveryProcess(
+      DeliveryProcess(
         'Package Process',
         messages: [
-          _DeliveryMessage('8:30am', 'Package received by driver'),
-          _DeliveryMessage('11:30am', 'Reached halfway mark'),
+          DeliveryMessage('8:30am', 'Package received by driver'),
+          DeliveryMessage('11:30am', 'Reached halfway mark'),
         ],
       ),
-      const _DeliveryProcess(
+      DeliveryProcess(
         'In Transit',
         messages: [
-          _DeliveryMessage('13:00pm', 'Driver arrived at destination'),
-          _DeliveryMessage('11:35am', 'Package delivered by m.vassiliades'),
+          DeliveryMessage('13:00pm', 'Driver arrived at destination'),
+          DeliveryMessage('11:35am', 'Package delivered by m.vassiliades'),
         ],
       ),
-      const _DeliveryProcess.complete(),
+      DeliveryProcess.complete(),
     ],
   )});
 
@@ -83,7 +87,7 @@ class _OrderTitle extends StatelessWidget {
     required this.orderInfo,
   }) : super(key: key);
 
-  final _OrderInfo orderInfo;
+  final OrderInfo orderInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +118,7 @@ class _InnerTimeline extends StatelessWidget {
     required this.messages,
   });
 
-  final List<_DeliveryMessage> messages;
+  final List<DeliveryMessage> messages;
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +168,7 @@ class _DeliveryProcesses extends StatelessWidget {
   const _DeliveryProcesses({Key? key, required this.processes})
       : super(key: key);
 
-  final List<_DeliveryProcess> processes;
+  final List<DeliveryProcess> processes;
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
@@ -239,7 +243,7 @@ class _DeliveryProcesses extends StatelessWidget {
 class _OnTimeBar extends StatelessWidget {
   const _OnTimeBar({Key? key, required this.driver}) : super(key: key);
 
-  final _DriverInfo driver;
+  final DriverInfo driver;
 
   @override
   Widget build(BuildContext context) {
@@ -283,81 +287,36 @@ class _OnTimeBar extends StatelessWidget {
   }
 }
 
-_OrderInfo _data(int id) => _OrderInfo(
+OrderInfo _data(int id) => OrderInfo(
   id: id,
   date: DateTime.now(),
-  driverInfo: const _DriverInfo(
+  driverInfo: const DriverInfo(
     name: 'Philipe',
     thumbnailUrl:
     'https://i.pinimg.com/originals/08/45/81/084581e3155d339376bf1d0e17979dc6.jpg',
   ),
   deliveryProcesses: [
-    const _DeliveryProcess(
+    const DeliveryProcess(
       'Package Process',
       messages: [
-        _DeliveryMessage('8:30am', 'Package received by driver'),
-        _DeliveryMessage('11:30am', 'Reached halfway mark'),
+        DeliveryMessage('8:30am', 'Package received by driver'),
+        DeliveryMessage('11:30am', 'Reached halfway mark'),
       ],
     ),
-    const _DeliveryProcess(
+    const DeliveryProcess(
       'In Transit',
       messages: [
-        _DeliveryMessage('13:00pm', 'Driver arrived at destination'),
-        _DeliveryMessage('11:35am', 'Package delivered by m.vassiliades'),
+        DeliveryMessage('13:00pm', 'Driver arrived at destination'),
+        DeliveryMessage('11:35am', 'Package delivered by m.vassiliades'),
       ],
     ),
-    const _DeliveryProcess.complete(),
+    const DeliveryProcess.complete(),
   ],
 );
 
-class _OrderInfo {
-  const _OrderInfo({
-    required this.id,
-    required this.date,
-    required this.driverInfo,
-    required this.deliveryProcesses,
-  });
 
-  final int id;
-  final DateTime date;
-  final _DriverInfo driverInfo;
-  final List<_DeliveryProcess> deliveryProcesses;
-}
 
-class _DriverInfo {
-  const _DriverInfo({
-    required this.name,
-    required this.thumbnailUrl,
-  });
 
-  final String name;
-  final String thumbnailUrl;
-}
 
-class _DeliveryProcess {
-  const _DeliveryProcess(
-      this.name, {
-        this.messages = const [],
-      });
 
-  const _DeliveryProcess.complete()
-      : this.name = 'Done',
-        this.messages = const [];
 
-  final String name;
-  final List<_DeliveryMessage> messages;
-
-  bool get isCompleted => name == 'Done';
-}
-
-class _DeliveryMessage {
-  const _DeliveryMessage(this.createdAt, this.message);
-
-  final String createdAt; // final DateTime createdAt;
-  final String message;
-
-  @override
-  String toString() {
-    return '$createdAt $message';
-  }
-}

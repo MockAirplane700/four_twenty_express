@@ -48,12 +48,14 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                       return ListView.builder(
                         itemBuilder: (context , index) {
                           return StoresDashboardCard(
-                              store: stores[index], banner: stores[index].images[0], thumbnail: stores[index].images[0],
+                              store: stores[index],
+                              banner: stores[index].images[0], thumbnail: stores[index].images[0],
                               name: stores[index].name, duration: '20 mins', fee: '2.99',
                               googleRating: stores[index].rating,
                               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> StoreDisplayPage(store: stores[index])))
                           );
                         },
+                        itemCount: stores.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                       );
@@ -65,7 +67,7 @@ class _HomeDashBoardState extends State<HomeDashBoard> {
                   }//end if-else
                 },
               future: Stores.getSampleStores(),
-            ),)
+            ),),
           ],
         ),
       ),

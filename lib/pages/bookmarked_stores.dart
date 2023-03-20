@@ -48,7 +48,7 @@ class _BookmarkedStoresState extends State<BookmarkedStores> {
               return const Center(child: CircularProgressIndicator(),);
             }//end if-else
           },
-        future: Stores.getSampleStores(),
+        future: Stores.getStoreBookmarks(),
       ),
     );
   }

@@ -33,6 +33,20 @@ String? encodeQueryParameters(Map<String, String> params) {
 // OPEN PHONE DIALER
 
 
+///-----------------------------------------------------------------------------
+///     STRING PROCESSING
+///-----------------------------------------------------------------------------
+
+List<String> getImages(String string) {
+  List<String> images = string.split('[');
+  List<String> unwantedString = images.last.split(']');
+  images.remove('');
+  images.addAll(unwantedString[0].split(','));
+  images.removeAt(0);
+  return images;
+}
+
+
 
 
 

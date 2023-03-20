@@ -35,9 +35,7 @@ class _CustomProductCardState extends State<CustomProductCard> {
     List list = widget.product.sizes;
     dropdownValue = list.first;
 
-    return widget.product.type.contains('bud') ?
-    //  THE PRODUCT TYPE IS BUDS, PRE-ROLLS,ETC
-    GestureDetector(
+    return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> DisplayCannabisInfusedProduct(product:widget.product )));
       },
@@ -192,26 +190,8 @@ class _CustomProductCardState extends State<CustomProductCard> {
           ],
         ),
       ),
-    ) :
-    //  THE PRODUCT TYPE IS AN ACCESSORY
-    Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(height/80),
-      ),
-      shadowColor: shadowColor,
-      child: Row(
-        children:  [
-          //  PRODUCT IMAGE
-          //  PRODUCT DETAILS - INCLUDING PURCHASE BUTTON
-          Column(
-            children: const [
-              //  NAME OF PRODUCT
-              //  SUPPLIER
-              //  PURCHASE BUTTON
-            ],
-          )
-        ],
-      ),
     );
+    //  THE PRODUCT TYPE IS AN ACCESSORY
+
   }
 }

@@ -1,3 +1,4 @@
+import 'package:four_twenty_express/constants/functions.dart';
 import 'package:four_twenty_express/objects/history.dart';
 import 'package:four_twenty_express/objects/store.dart';
 import 'package:path/path.dart';
@@ -64,8 +65,10 @@ class SQLDatabase {
 
       return List.generate(maps.length, (index) {
         return Store(
-            id: maps[index]['id'], name: maps[index]['name'], description: maps[index]['description'],
-            images: maps[index]['images'].split(','), products: maps[index]['products'].split(','), address: maps[index]['address'].split(','),
+            id: maps[index]['id'].toString(), name: maps[index]['name'], description: maps[index]['description'],
+            images: getImages(maps[index]['images']),
+            products: getImages(maps[index]['products']),
+            address: maps[index]['address'].split(','),
             website: maps[index]['website'], phone:maps[index]['phone'] ,
             email: maps[index]['email'], rating: maps[index]['rating']);
       }).toList();

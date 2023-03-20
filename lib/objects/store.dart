@@ -19,7 +19,7 @@ class Store {
 
   Map<String, dynamic> toJson() {
     return {
-      'id' : id,
+      'id' : int.parse(id),
       'name' : name,
       'description' : description,
       'images' : images.toString(),
@@ -35,8 +35,8 @@ class Store {
   factory Store.fromJson(Map<String,dynamic> json) {
     return Store(
         id: json['id'], name: json['name'], description:json['description'] ,
-        images: json['images'], products:json['products'] ,
-        address: json['address'], website:json['website'] ,
+        images: json['images'].split(','), products:json['products'].split(',') ,
+        address: json['address'].split(','), website:json['website'] ,
         phone: json['phone'], email: json['email'], rating: json['rating']
     );
   }//end from json

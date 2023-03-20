@@ -73,7 +73,7 @@ class Products {
 
     List<Product> list = [
       Product(
-          id: '0', name: 'Organic Sugar Bush', type: 'bud',
+          id: '0', name: 'Organic Sugar Bush', type: 'flower',
           description: 'Organic Sugar Bush is a high potency Sativa that has a notably floral and sweet scent, reminiscent of ripe melon and rosewood.',
           images: ['https://firebasestorage.googleapis.com/v0/b/coupons-are-us.appspot.com/o/four_twenty_express%2Fbud-1.png?alt=media&token=633fc5dd-9c11-4b2c-bed4-1a4cced418af'],
           price: 44.50,
@@ -86,7 +86,7 @@ class Products {
         strainType: 'Sativa'
       ),
       Product(
-          id: '1', name: 'Organic Sugar Bush', type: 'bud',
+          id: '1', name: 'Organic Sugar Bush', type: 'flower',
           description: 'Organic Sugar Bush is a high potency Sativa that has a notably floral and sweet scent, reminiscent of ripe melon and rosewood.',
           images: ['https://firebasestorage.googleapis.com/v0/b/coupons-are-us.appspot.com/o/four_twenty_express%2Fbud-1.png?alt=media&token=633fc5dd-9c11-4b2c-bed4-1a4cced418af'],
           price: 44.50,
@@ -99,7 +99,7 @@ class Products {
           strainType: 'Indica'
       ),
       Product(
-          id: '2', name: 'Organic Sugar Bush', type: 'bud',
+          id: '2', name: 'Organic Sugar Bush', type: 'edibles',
           description: 'Organic Sugar Bush is a high potency Sativa that has a notably floral and sweet scent, reminiscent of ripe melon and rosewood.',
           images: ['https://firebasestorage.googleapis.com/v0/b/coupons-are-us.appspot.com/o/four_twenty_express%2Fbud-1.png?alt=media&token=633fc5dd-9c11-4b2c-bed4-1a4cced418af'],
           price: 44.50,
@@ -129,4 +129,43 @@ class Products {
       );
     });
   }//end get sample product
+
+  static Future<Map<String,dynamic>> getProductByType(List products) async {
+    List flower = [];
+    List edibles = [];
+    List extracts = [];
+    List preRolls = [];
+    List accessories = [];
+    Map<String,dynamic> results = {};
+
+    for (var product in products) {
+      Product tempProduct = await getSampleProduct(product);
+      String type = tempProduct.type;
+      if (type.contains('flower')){
+        flower.add(tempProduct);
+      } else if (type.contains('edibles')){
+        edibles.add(tempProduct);
+      } else if (type.contains('extracts')){
+        extracts.add(tempProduct);
+      } else if (type.contains('preRolls')) {
+        preRolls.add(tempProduct);
+      }else{
+        accessories.add(tempProduct);
+      }//end if -else
+    }//end for loop
+
+    results = {
+      //  FLOWER
+      'FLOWER' : flower,
+      //  EDIBLES
+      'EDIBLES': edibles,
+      //  EXTRACTS
+      'EXTRACTS': extracts,
+      //  PRE-ROLLS
+      'PRE-ROLLS': preRolls,
+      //  ACCESSORIES
+      'ACCESSORIES' : accessories
+    };
+    return Future(() => results);
+  }//end get product by type
 }//end products

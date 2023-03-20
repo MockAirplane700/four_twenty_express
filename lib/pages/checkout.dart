@@ -80,6 +80,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 },
               stream: bloc.getStream,
               initialData: bloc.allItems,
+
             ),
           ),
           //  SHOW CASE TOTALS AND FEES

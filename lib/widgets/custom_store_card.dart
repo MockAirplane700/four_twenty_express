@@ -30,11 +30,32 @@ class StoresDashboardCard extends StatefulWidget {
 
 class _StoresDashboardCardState extends State<StoresDashboardCard> {
   Color tempIconColor = Colors.grey;
+
+  checkedBookmark() async {
+    //  CHECK IF STORE IS SAVED IN BOOKMARKS
+    if ( await Stores.isBookmarked(widget.store)){
+
+      setState(() {
+        tempIconColor = Colors.red;
+      });
+    }
+
+  }// checked bookmark
+
+  changeTempColor(Color  colors) {
+    setState(() {
+      tempIconColor = colors;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
+
+    checkedBookmark();
     return GestureDetector(
       onTap: widget.onTap,
       child: Card(
@@ -65,17 +86,13 @@ class _StoresDashboardCardState extends State<StoresDashboardCard> {
                               Expanded(child:  IconButton(
                                   onPressed: () {
                                     if (tempIconColor == Colors.grey){
-                                      setState(() {
-                                        tempIconColor = Colors.red;
-                                      });
-                                      // add to bookmarks
                                       Stores.bookmarkStore(widget.store);
+                                      changeTempColor(Colors.red);
+                                      // add to bookmarks
                                     }else{
-                                      setState(() {
-                                        tempIconColor = Colors.grey;
-                                      });
-                                      //remove stores
                                       Stores.removeBookmarkedStore(widget.store);
+                                      changeTempColor(Colors.grey);
+                                      //remove stores
                                     }//end if-else
                                   },
                                   icon:FaIcon(FontAwesomeIcons.solidHeart, color: tempIconColor,)

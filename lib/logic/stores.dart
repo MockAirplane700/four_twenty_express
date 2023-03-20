@@ -12,7 +12,7 @@ class Stores {
     return await Future(() {
       return [
         Store(
-            id: '0', name: 'Star Cannabis co ',
+            id: '13', name: 'Star Cannabis co ',
             description: 'STAR BUDS is YOUR friendly neighbourhood cannabis store.     We provide a comfortable setting to learn about and purchase cannabis & accessories. Our carefully curated selection has something for everyone, from the occasional user to the daily consumer.  We are home to a top-notch selection of cannabis flower, plus a wide array of cannabis concentrates, edibles and more!  Check out our product selection in Ontario, Manitoba and Alberta!',
             images: [
               'https://firebasestorage.googleapis.com/v0/b/coupons-are-us.appspot.com/o/four_twenty_express%2Fstar-logo.png?alt=media&token=20ce4ec4-716a-4153-b88b-bef45245c0cc',
@@ -108,4 +108,18 @@ class Stores {
   static Future<List<Store>> getStoreBookmarks() async {
     return await SQLDatabase.getStores();
   }
+
+  //  CHECK IF STORE IS ALREADY IN THE DATABASE
+  static Future<bool> isBookmarked(Store store) async{
+    List<Store> stores = await getStoreBookmarks();
+    bool result = false;
+    for (var temp in stores) {
+      int storeId = int.parse(temp.id);
+      int storeTempId = int.parse(store.id);
+      if ( storeId == storeTempId ){
+        return true;
+      }
+    }//end for loop
+    return result;
+  }//end is bookmarked
 }//end stores
